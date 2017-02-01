@@ -12,11 +12,41 @@ call plug#begin('~/vimfiles/plugged')
 "Plug 'lifepillar/vim-solarized8'
 Plug 'NLKNguyen/papercolor-theme'
 "Plug 'jonathanfilip/vim-lucius'
-    set background=light
-    colorscheme PaperColor " tutticolor colorful lucius
 
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+    let g:airline#extensions#tabline#enabled = 1
+    let g:airline_powerline_fonts = 1
+
+    if !exists('g:airline_symbols')
+        let g:airline_symbols = {}
+    endif
+
+    " unicode symbols
+    set encoding=utf-8
+
+    " unicode symbols
+    let g:airline_left_sep = '»'
+    let g:airline_left_sep = '▶'
+    let g:airline_right_sep = '«'
+    let g:airline_right_sep = '◀'
+    let g:airline_symbols.linenr = '␊'
+    let g:airline_symbols.linenr = '␤'
+    let g:airline_symbols.linenr = '¶'
+    let g:airline_symbols.branch = '⎇'
+    let g:airline_symbols.paste = 'ρ'
+    let g:airline_symbols.paste = 'Þ'
+    let g:airline_symbols.paste = '∥'
+    let g:airline_symbols.whitespace = 'Ξ'
+
+    " airline symbols
+    let g:airline_left_sep = ''
+    let g:airline_left_alt_sep = ''
+    let g:airline_right_sep = ''
+    let g:airline_right_alt_sep = ''
+    let g:airline_symbols.branch = ''
+    let g:airline_symbols.readonly = ''
+    let g:airline_symbols.linenr = ''
 
 Plug 'jelera/vim-javascript-syntax'
 Plug 'vim-scripts/JavaScript-Indent'
@@ -33,6 +63,7 @@ Plug 'ctrlpvim/ctrlp.vim'
     let g:ctrlp_user_command = 'pt --nogroup -S --ignore=node_modules --global-gitignore -g "" %s'
 
 Plug 'dyng/ctrlsf.vim'
+    let g:ctrlsf_ackprg = 'rg'
 
 Plug 'xolox/vim-misc'
 Plug 'xolox/vim-session'
@@ -50,6 +81,9 @@ syntax enable
 "set guifont=Droid_Sans_Mono_Dotted_for_Powe:h10:cANSI:qDRAFT
 set guifont=DejaVu_Sans_Mono_For_Powerline:h10:cANSI:qDRAFT
 "set guifont=Fira_Mono_For_Powerline:h11:cANSI:qDRAFT
+
+set background=light
+colorscheme PaperColor " tutticolor colorful lucius
 
 filetype on
 filetype indent on
@@ -91,40 +125,7 @@ set wildchar=<Tab> wildmenu wildmode=longest:full,full
 set cursorline
 set clipboard=unnamed " use system clipboard
 
-" airline
-"===============================================================================
-let g:airline#extensions#tabline#enabled = 1
-let g:airline_powerline_fonts = 1
-
-if !exists('g:airline_symbols')
-    let g:airline_symbols = {}
-endif
-
-" unicode symbols
-set encoding=utf-8
-
-" unicode symbols
-let g:airline_left_sep = '»'
-let g:airline_left_sep = '▶'
-let g:airline_right_sep = '«'
-let g:airline_right_sep = '◀'
-let g:airline_symbols.linenr = '␊'
-let g:airline_symbols.linenr = '␤'
-let g:airline_symbols.linenr = '¶'
-let g:airline_symbols.branch = '⎇'
-let g:airline_symbols.paste = 'ρ'
-let g:airline_symbols.paste = 'Þ'
-let g:airline_symbols.paste = '∥'
-let g:airline_symbols.whitespace = 'Ξ'
-
-" airline symbols
-let g:airline_left_sep = ''
-let g:airline_left_alt_sep = ''
-let g:airline_right_sep = ''
-let g:airline_right_alt_sep = ''
-let g:airline_symbols.branch = ''
-let g:airline_symbols.readonly = ''
-let g:airline_symbols.linenr = ''
+set fileformats=unix,dos
 
 " Key mappings
 "===============================================================================
@@ -154,5 +155,22 @@ nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 
+"finding files
+nnoremap <silent><leader>f :<C-U>CtrlPMixed<CR>
+nnoremap <silent><C-p> :<C-U>CtrlPMixed<CR>
+nnoremap <silent><leader>b :<C-U>CtrlPBuffer<CR>
+
+"searching in files
+nmap     <leader>f <Plug>CtrlSFPrompt
+vmap     <C-F>f <Plug>CtrlSFVwordPath
+vmap     <C-F>F <Plug>CtrlSFVwordExec
+nmap     <C-F>n <Plug>CtrlSFCwordPath
+nmap     <C-F>p <Plug>CtrlSFPwordPath
+nnoremap <C-F>o :CtrlSFOpen<CR>
+nnoremap <C-F>t :CtrlSFToggle<CR>
+inoremap <C-F>t <Esc>:CtrlSFToggle<CR>
+nmap     <C-F>l <Plug>CtrlSFQuickfixPrompt
+vmap     <C-F>l <Plug>CtrlSFQuickfixVwordPath
+vmap     <C-F>L <Plug>CtrlSFQuickfixVwordExec
 
 
