@@ -48,8 +48,9 @@ Plug 'vim-airline/vim-airline-themes'
     let g:airline_symbols.readonly = ''
     let g:airline_symbols.linenr = ''
 
-Plug 'jelera/vim-javascript-syntax'
-Plug 'vim-scripts/JavaScript-Indent'
+"Plug 'jelera/vim-javascript-syntax'
+"Plug 'vim-scripts/JavaScript-Indent'
+Plug 'sheerun/vim-polyglot'
 
 Plug 'Shougo/unite.vim'
 
@@ -69,6 +70,41 @@ Plug 'xolox/vim-misc'
 Plug 'xolox/vim-session'
     let g:session_autosave = 'yes'
     let g:session_autoload = 'yes'
+
+Plug 'vim-syntastic/syntastic'
+    let g:syntastic_javascript_checkers = ['jshint']
+    let g:syntastic_json_checkers = ['jshint']
+    let g:syntastic_javascript_jshint_args = 
+        \ '--config C:/code/hana_epm_fpa/config/coding/jshintConfig.js'
+    let g:syntastic_css_checkers = ['csslint']
+    let g:syntastic_css_csslint_args = 
+        \ '--ignore=order-alphabetical,important,ids,adjoining-classes,zero-units'
+
+Plug 'koron/nyancat-vim'
+
+Plug 'pelodelfuego/vim-swoop'
+    " TODO: figure out how to use
+
+Plug 'scrooloose/nerdcommenter'
+    " Add spaces after comment delimiters by default
+    let g:NERDSpaceDelims = 1
+
+    " Use compact syntax for prettified multi-line comments
+    let g:NERDCompactSexyComs = 1
+
+    " Align line-wise comment delimiters flush left instead of following code indentation
+    let g:NERDDefaultAlign = 'left'
+
+    " Set a language to use its alternate delimiters by default
+    let g:NERDAltDelims_java = 1
+
+    " Allow commenting and inverting empty lines (useful when commenting a region)
+    let g:NERDCommentEmptyLines = 1
+
+    " Enable trimming of trailing whitespace when uncommenting
+    let g:NERDTrimTrailingWhitespace = 1
+
+Plug 'easymotion/vim-easymotion'
 
 " Initialize plugin system
 call plug#end()
@@ -93,7 +129,6 @@ set shiftwidth=4
 set softtabstop=4
 set expandtab
 set smarttab
-set number " show line numbers
 set hlsearch " highlight search
 set incsearch " incremental search
 set ignorecase
@@ -127,13 +162,26 @@ set clipboard=unnamed " use system clipboard
 
 set fileformats=unix,dos
 
+" line numbering
+set number
+autocmd InsertEnter * :set norelativenumber
+autocmd InsertLeave * :set relativenumber
+":au FocusLost * :set norelativenumber
+":au FocusGained * :set relativenumber
+
+"set shellslash " use forward slasheds
+
 " Key mappings
 "===============================================================================
+" note: you can see mapping with :map <key>   (ex: :map <C-d>)
 let mapleader = ","
 imap jk <Esc>
-set timeoutlen=500
+cmap jk <C-U><Esc>
+set timeoutlen=1000
 vnoremap <C-c> "*y
 inoremap <C-v> <C-O>"*P
+
+"Note: command history is:  q:
 
 " If the current buffer has never been saved, it will have no name,
 " call the file browser to save it, otherwise just save it.
@@ -154,17 +202,18 @@ nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
+nnoremap <C-Q> <C-W><C-Q>
 
 "finding files
-nnoremap <silent><leader>f :<C-U>CtrlPMixed<CR>
+nnoremap <silent><leader>g :<C-U>CtrlPMixed<CR>
 nnoremap <silent><C-p> :<C-U>CtrlPMixed<CR>
 nnoremap <silent><leader>b :<C-U>CtrlPBuffer<CR>
 
 "searching in files
-nmap     <leader>f <Plug>CtrlSFPrompt
+nmap     <C-F>f <Plug>CtrlSFPrompt
 vmap     <C-F>f <Plug>CtrlSFVwordPath
 vmap     <C-F>F <Plug>CtrlSFVwordExec
-nmap     <C-F>n <Plug>CtrlSFCwordPath
+"nmap     <C-F>n <Plug>CtrlSFCwordPath
 nmap     <C-F>p <Plug>CtrlSFPwordPath
 nnoremap <C-F>o :CtrlSFOpen<CR>
 nnoremap <C-F>t :CtrlSFToggle<CR>
@@ -173,4 +222,27 @@ nmap     <C-F>l <Plug>CtrlSFQuickfixPrompt
 vmap     <C-F>l <Plug>CtrlSFQuickfixVwordPath
 vmap     <C-F>L <Plug>CtrlSFQuickfixVwordExec
 
+function! SearchWebpackNodeModulesFun( arg )
+    let g:ctrlsf_extra_backend_args = {'rg': '--no-ignore-parent'}
+    execute 'CtrlSF ' . a:arg . ' /code/hana_epm_fpa/webpack/node_modules'
+    let g:ctrlsf_extra_backend_args = {}
+endfunction
 
+command! -nargs=* SearchWebpackNodeModules call SearchWebpackNodeModulesFun( '<args>' )
+noremap <C-F>n :SearchWebpackNodeModules
+
+"easymotion
+" <Leader>f{char} to move to {char}
+map  <Leader>f <Plug>(easymotion-bd-f)
+nmap <Leader>f <Plug>(easymotion-overwin-f)
+
+" s{char}{char} to move to {char}{char}
+nmap s <Plug>(easymotion-overwin-f2)
+
+" Move to line
+map <Leader>L <Plug>(easymotion-bd-jk)
+nmap <Leader>L <Plug>(easymotion-overwin-line)
+
+" Move to word
+map  <Leader>w <Plug>(easymotion-bd-w)
+nmap <Leader>w <Plug>(easymotion-overwin-w)
