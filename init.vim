@@ -18,35 +18,35 @@ Plug 'vim-airline/vim-airline-themes'
     let g:airline#extensions#tabline#enabled = 1
     let g:airline_powerline_fonts = 1
 
-    if !exists('g:airline_symbols')
-        let g:airline_symbols = {}
-    endif
-
     " unicode symbols
     set encoding=utf-8
 
-    " unicode symbols
-    let g:airline_left_sep = '»'
-    let g:airline_left_sep = '▶'
-    let g:airline_right_sep = '«'
-    let g:airline_right_sep = '◀'
-    let g:airline_symbols.linenr = '␊'
-    let g:airline_symbols.linenr = '␤'
-    let g:airline_symbols.linenr = '¶'
-    let g:airline_symbols.branch = '⎇'
-    let g:airline_symbols.paste = 'ρ'
-    let g:airline_symbols.paste = 'Þ'
-    let g:airline_symbols.paste = '∥'
-    let g:airline_symbols.whitespace = 'Ξ'
+    " if !exists('g:airline_symbols')
+    "     let g:airline_symbols = {}
+    " endif
 
-    " airline symbols
-    let g:airline_left_sep = ''
-    let g:airline_left_alt_sep = ''
-    let g:airline_right_sep = ''
-    let g:airline_right_alt_sep = ''
-    let g:airline_symbols.branch = ''
-    let g:airline_symbols.readonly = ''
-    let g:airline_symbols.linenr = ''
+    " unicode symbols
+    " let g:airline_left_sep = '»'
+    " let g:airline_left_sep = '▶'
+    " let g:airline_right_sep = '«'
+    " let g:airline_right_sep = '◀'
+    " let g:airline_symbols.linenr = '␊'
+    " let g:airline_symbols.linenr = '␤'
+    " let g:airline_symbols.linenr = '¶'
+    " let g:airline_symbols.branch = '⎇'
+    " let g:airline_symbols.paste = 'ρ'
+    " let g:airline_symbols.paste = 'Þ'
+    " let g:airline_symbols.paste = '∥'
+    " let g:airline_symbols.whitespace = 'Ξ'
+    "
+    " " airline symbols
+    " let g:airline_left_sep = ''
+    " let g:airline_left_alt_sep = ''
+    " let g:airline_right_sep = ''
+    " let g:airline_right_alt_sep = ''
+    " let g:airline_symbols.branch = ''
+    " let g:airline_symbols.readonly = ''
+    " let g:airline_symbols.linenr = ''
 
 "Plug 'jelera/vim-javascript-syntax'
 "Plug 'vim-scripts/JavaScript-Indent'
@@ -108,6 +108,8 @@ Plug 'easymotion/vim-easymotion'
 
 Plug 'lambdalisue/vim-gita'
 
+Plug 'ryanoasis/vim-devicons' 
+
 " Initialize plugin system
 call plug#end()
 
@@ -117,8 +119,10 @@ set nocompatible
 syntax enable
 "set guifont=Hack:h10:cANSI:qDRAFT
 "set guifont=Droid_Sans_Mono_Dotted_for_Powe:h10:cANSI:qDRAFT
-set guifont=DejaVu_Sans_Mono_For_Powerline:h10:cANSI:qDRAFT
 "set guifont=Fira_Mono_For_Powerline:h11:cANSI:qDRAFT
+" set guifont=DejaVu_Sans_Mono_For_Powerline:h10:cANSI:qDRAFT
+"set guifont=DroidSansMonoForPowerline_NF:h10:cANSI:qDRAFT
+set guifont=Knack_NF:h10:cANSI:qDRAFT
 
 set background=light
 colorscheme PaperColor " tutticolor colorful lucius
