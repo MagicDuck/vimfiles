@@ -213,7 +213,7 @@ nnoremap <C-H> <C-W><C-H>
 nnoremap <C-Q> <C-W><C-Q>
 
 "finding files
-nnoremap <silent><leader>g :<C-U>CtrlPMixed<CR>
+nnoremap <silent><leader>f :<C-U>CtrlPMixed<CR>
 nnoremap <silent><C-p> :<C-U>CtrlPMixed<CR>
 nnoremap <silent><leader>b :<C-U>CtrlPBuffer<CR>
 
@@ -240,9 +240,9 @@ command! -nargs=* SearchWebpackNodeModules call SearchWebpackNodeModulesFun( '<a
 noremap <C-F>n :SearchWebpackNodeModules<space>
 
 "easymotion
-" <Leader>f{char} to move to {char}
-map  <Leader>f <Plug>(easymotion-bd-f)
-nmap <Leader>f <Plug>(easymotion-overwin-f)
+" <Leader>f{char}{char} to move to {char}
+map  <Leader>s <Plug>(easymotion-bd-f2)
+"nmap <Leader>f <Plug>(easymotion-overwin-f)
 
 " s{char}{char} to move to {char}{char}
 nmap s <Plug>(easymotion-overwin-f2)
@@ -253,4 +253,6 @@ nmap <Leader>L <Plug>(easymotion-overwin-line)
 
 " Move to word
 map  <Leader>w <Plug>(easymotion-bd-w)
-nmap <Leader>w <Plug>(easymotion-overwin-w)
+
+"gita
+nmap <Leader>g :Gita<space>
