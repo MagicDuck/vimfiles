@@ -106,6 +106,8 @@ Plug 'scrooloose/nerdcommenter'
 
 Plug 'easymotion/vim-easymotion'
 
+Plug 'lambdalisue/vim-gita'
+
 " Initialize plugin system
 call plug#end()
 
@@ -120,6 +122,8 @@ set guifont=DejaVu_Sans_Mono_For_Powerline:h10:cANSI:qDRAFT
 
 set background=light
 colorscheme PaperColor " tutticolor colorful lucius
+
+set hidden
 
 filetype on
 filetype indent on
@@ -138,7 +142,7 @@ set infercase " better case handling for insert mode completion
 set smartindent
 "set autoindent
 set autoread " automatically reload files changed outside Vim
-set autowrite " automatically write files when doing things like :make
+"set autowrite " automatically write files when doing things like :make
 
 set cmdheight=2
 set laststatus=2
@@ -229,7 +233,7 @@ function! SearchWebpackNodeModulesFun( arg )
 endfunction
 
 command! -nargs=* SearchWebpackNodeModules call SearchWebpackNodeModulesFun( '<args>' )
-noremap <C-F>n :SearchWebpackNodeModules
+noremap <C-F>n :SearchWebpackNodeModules<space>
 
 "easymotion
 " <Leader>f{char} to move to {char}
