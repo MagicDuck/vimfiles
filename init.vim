@@ -52,11 +52,11 @@ Plug 'vim-airline/vim-airline-themes'
 "Plug 'vim-scripts/JavaScript-Indent'
 Plug 'sheerun/vim-polyglot'
 
-Plug 'Shougo/unite.vim'
+"Plug 'Shougo/unite.vim'
 
 "Plug 'Shougo/vimproc.vim', {'do' : 'make'}
-Plug 'Shougo/vimproc.vim'
-    let g:vimproc#download_windows_dll = 1
+"Plug 'Shougo/vimproc.vim'
+"    let g:vimproc#download_windows_dll = 1
 
 Plug 'ctrlpvim/ctrlp.vim'
     let g:ctrlp_working_path_mode = 'rw'
@@ -106,9 +106,12 @@ Plug 'scrooloose/nerdcommenter'
 
 Plug 'easymotion/vim-easymotion'
 
-Plug 'lambdalisue/vim-gita'
+"Plug 'lambdalisue/vim-gita'
+Plug 'tpope/vim-fugitive'
 
 Plug 'ryanoasis/vim-devicons' 
+
+Plug 'jiangmiao/auto-pairs'
 
 " Initialize plugin system
 call plug#end()
@@ -189,6 +192,8 @@ set timeoutlen=1000
 vnoremap <C-c> "*y
 inoremap <C-v> <C-O>"*P
 
+nnoremap ; :
+
 "Note: command history is:  q:
 
 " If the current buffer has never been saved, it will have no name,
@@ -211,6 +216,7 @@ nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 nnoremap <C-Q> <C-W><C-Q>
+nnoremap <leader>q :bp\|bd #<CR>
 
 "finding files
 nnoremap <silent><leader>f :<C-U>CtrlPMixed<CR>
@@ -254,5 +260,9 @@ nmap <Leader>L <Plug>(easymotion-overwin-line)
 " Move to word
 map  <Leader>w <Plug>(easymotion-bd-w)
 
-"gita
-nmap <Leader>g :Gita<space>
+"vimdiff current vs git head (fugitive extension)
+nnoremap <Leader>gd :Gdiff<cr> 
+"switch back to current file and closes fugitive buffer
+nnoremap <Leader>gD <c-w>h<c-w>c
+
+nnoremap <Leader>gs :Gstatus<cr>
