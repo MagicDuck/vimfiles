@@ -61,7 +61,17 @@ Plug 'sheerun/vim-polyglot'
 Plug 'ctrlpvim/ctrlp.vim'
     let g:ctrlp_working_path_mode = 'rw'
     "let g:ctrlp_user_command = '\bin\ag.exe --nocolor --hidden -g "" %s'
-    let g:ctrlp_user_command = 'pt --nogroup -S --ignore=node_modules --global-gitignore -g "" %s'
+    "let g:ctrlp_user_command = 'pt --nogroup -S --ignore=node_modules --global-gitignore -g "" %s'
+    let g:ctrlp_user_command ='rg -F --files --hidden %s'
+    let g:ctrlp_by_filename = 0
+    let g:ctrlp_mruf_case_sensitive = 0
+    let g:ctrlp_max_files = 0 " no limit
+    let g:ctrlp_show_hidden = 1
+
+Plug 'JazzCore/ctrlp-cmatcher'
+    let g:ctrlp_match_func = {'match' : 'matcher#cmatch' }
+
+"Plug 'junegunn/fzf', { 'dir': '~/.fzf' }
 
 Plug 'dyng/ctrlsf.vim'
     let g:ctrlsf_ackprg = 'rg'
@@ -74,10 +84,10 @@ Plug 'xolox/vim-session'
 Plug 'vim-syntastic/syntastic'
     let g:syntastic_javascript_checkers = ['jshint']
     let g:syntastic_json_checkers = ['jshint']
-    let g:syntastic_javascript_jshint_args = 
+    let g:syntastic_javascript_jshint_args =
         \ '--config C:/code/hana_epm_fpa/config/coding/jshintConfig.js'
     let g:syntastic_css_checkers = ['csslint']
-    let g:syntastic_css_csslint_args = 
+    let g:syntastic_css_csslint_args =
         \ '--ignore=order-alphabetical,important,ids,adjoining-classes,zero-units'
 
 Plug 'koron/nyancat-vim'
@@ -109,9 +119,11 @@ Plug 'easymotion/vim-easymotion'
 "Plug 'lambdalisue/vim-gita'
 Plug 'tpope/vim-fugitive'
 
-Plug 'ryanoasis/vim-devicons' 
+Plug 'ryanoasis/vim-devicons'
 
 Plug 'jiangmiao/auto-pairs'
+
+Plug 'maksimr/vim-jsbeautify'
 
 " Initialize plugin system
 call plug#end()
@@ -145,6 +157,7 @@ set incsearch " incremental search
 set ignorecase
 set smartcase
 set infercase " better case handling for insert mode completion
+set wrapscan
 
 set smartindent
 "set autoindent
@@ -165,13 +178,14 @@ if has("gui_running")
     au GUIEnter * simalt ~x  "maximize
 endif
 
-set autowriteall
+"set autowriteall
 set wildchar=<Tab> wildmenu wildmode=longest:full,full
 
 set cursorline
 set clipboard=unnamed " use system clipboard
 
 set fileformats=unix,dos
+set backupcopy=yes " make file change watchers happy
 
 " line numbering
 set number
@@ -182,6 +196,14 @@ autocmd InsertLeave * :set relativenumber
 
 "set shellslash " use forward slasheds
 
+function! <SID>StripTrailingWhitespaces()
+    let l = line(".")
+    let c = col(".")
+    %s/\s\+$//e
+    call cursor(l, c)
+endfun
+autocmd BufWritePre * :call <SID>StripTrailingWhitespaces()
+
 " Key mappings
 "===============================================================================
 " note: you can see mapping with :map <key>   (ex: :map <C-d>)
@@ -190,7 +212,7 @@ imap jk <Esc>
 cmap jk <C-U><Esc>
 set timeoutlen=1000
 vnoremap <C-c> "*y
-inoremap <C-v> <C-O>"*P
+inoremap <C-v> <C-O>"*p
 
 nnoremap ; :
 
@@ -198,7 +220,7 @@ nnoremap ; :
 
 " If the current buffer has never been saved, it will have no name,
 " call the file browser to save it, otherwise just save it.
-command! -nargs=0 -bar Update if &modified 
+command! -nargs=0 -bar Update if &modified
                            \|    if empty(bufname('%'))
                            \|        browse confirm write
                            \|    else
@@ -261,8 +283,16 @@ nmap <Leader>L <Plug>(easymotion-overwin-line)
 map  <Leader>w <Plug>(easymotion-bd-w)
 
 "vimdiff current vs git head (fugitive extension)
-nnoremap <Leader>gd :Gdiff<cr> 
+nnoremap <Leader>gd :Gdiff<cr>
 "switch back to current file and closes fugitive buffer
 nnoremap <Leader>gD <c-w>h<c-w>c
 
 nnoremap <Leader>gs :Gstatus<cr>
+autocmd BufReadPost fugitive://* set bufhidden=delete
+
+autocmd FileType javascript vnoremap <buffer>  <leader>i :call RangeJsBeautify()<cr>
+autocmd FileType json vnoremap <buffer> <leader>i :call RangeJsonBeautify()<cr>
+autocmd FileType jsx vnoremap <buffer> <leader>i :call RangeJsxBeautify()<cr>
+autocmd FileType html vnoremap <buffer> <leader>i :call RangeHtmlBeautify()<cr>
+autocmd FileType css vnoremap <buffer> <leadedoner>i :call RangeCSSBeautify()<cr>
+
